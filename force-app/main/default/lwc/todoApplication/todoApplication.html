@@ -10,7 +10,8 @@
               message-when-value-missing="Kindly Enter the Task Name"
               onchange={changeHandler}
               name="taskname"
-              value={taskname}   
+              value={taskname}
+              class="taskname"   
             ></lightning-input>
 
 
@@ -25,21 +26,21 @@
           </div>
 
           <div  class="slds-var-p-around_small">
-            <lightning-input 
+            <lightning-button
             
               variant="brand" 
               label="Reset"
               onclick={resetHandler}
               class="slds-var-p-around_small"
-            ></lightning-input>
+            ></lightning-button>
 
 
-            <lightning-input 
+            <lightning-button 
             variant="brand" 
             label="Add Task "
             onclick={addTaskHandler}
             class="slds-var-p-around_small"
-          ></lightning-input>
+          ></lightning-button>
 
           </div>
           

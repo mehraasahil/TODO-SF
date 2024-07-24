@@ -25,20 +25,30 @@ export default class TodoApplication extends LightningElement {
 
 
     addTaskHandler(){
+      debugger
+      // alert('working')
         if(!this.taskdate){
      this.taskdate = new Date().toISOString().slice(0,10);
         }
        if(this.validateTask()){
-        this.incompletetask = [...this.incompletetask,{
-          taskname:this.tagName,
+        this.incompletetask = [...this.incompletetask,
+          {
+          taskname:this.taskname,
           taskdate:this.taskdate
         }]
-       } 
+        console.log('completetask',JSON.stringify(this.incompletetask));
+        this.resetHandler();
+       let sortedArray =  this.sortTask(this.incompletetask);
+       this.incompletetask = [...sortedArray]
+       console.log(' this.incompletetask',JSON.stringify(this.incompletetask));
+       }
+        
   }
 
 
     validateTask(){
       let isValid = true;
+      let element = this.template.querySelector('.taskname');
       //check if task name is empty
       if(!this.taskname){
         isValid = false;
@@ -49,7 +59,26 @@ export default class TodoApplication extends LightningElement {
           );
           if(taskItem){
             isValid = false;
+            element.setCustomValidity('Task is already avilable')
           }
       }
+      if(isValid){
+        element.setCustomValidity('');
+      }
+      element.reportValidity();
+      return isValid
+    }
+
+
+    sortTask(inputArr){
+      let sortedArray = inputArr.sort((a,b) =>{
+        const dataA = new Date(a.taskdate);
+        const dateB = new Date(b.taskdate);
+        return dataA - dateB;
+         
+       })
+       return sortedArray;
     }
 }
+
+
