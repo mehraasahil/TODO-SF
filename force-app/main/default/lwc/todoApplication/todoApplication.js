@@ -79,6 +79,46 @@ export default class TodoApplication extends LightningElement {
        })
        return sortedArray;
     }
+     
+
+    removeHandler(event){
+      let index = event.target.value;
+      this.incompletetask.splice(index,1);
+      let sortedArray =  this.sortTask(this.incompletetask);
+      this.incompletetask = [...sortedArray]
+      console.log(' this.incompletetask',JSON.stringify(this.incompletetask))
+
+    }
+
+    completetaskHandler(event){
+      let index = event.target.value;
+      this.refreshData(index)
+    }
+      
+
+    
+
+    dragStartHandler(event){
+      event.dataTransfer.setData("index",event.target.dataset.item)
+
+    }
+   allowDrop(event){
+      event.preventDefault();
+    }
+
+    dropElementHandler(event){
+      let index = event.dataTransfer.getData("index")
+      this.refreshData(index)
+    }
+
+    refreshData(index){
+      let removeItem =  this.incompletetask.splice(index,1);
+      let sortedArray =  this.sortTask(this.incompletetask);
+      this.incompletetask = [...sortedArray]
+     
+     this.completetask= [...this.completetask, removeItem[0]];
+    }
+
 }
 
 
